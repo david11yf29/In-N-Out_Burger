@@ -60,4 +60,16 @@ public class EmployeeController {
         return R.success(emp);
     }
 
+    /*
+     * 員工登出
+     * @param request
+     * @return
+     * */
+    @PostMapping("/logout")
+    public R<String> logout(HttpServletRequest request) {
+        // 清理 Session 中保存的當前登錄員工 id
+        request.getSession().removeAttribute("employee");
+        return R.success("退出成功！");
+    }
+
 }
