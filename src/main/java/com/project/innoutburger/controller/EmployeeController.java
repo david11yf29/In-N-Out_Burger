@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @RestController
 @RequestMapping("/employee")
@@ -70,6 +72,32 @@ public class EmployeeController {
         // 清理 Session 中保存的當前登錄員工 id
         request.getSession().removeAttribute("employee");
         return R.success("退出成功！");
+    }
+
+    /*
+     * 新增員工
+     * @param employee
+     * @return
+     * */
+    @PostMapping
+    public R<String> save(HttpServletRequest request, @RequestBody Employee employee) {
+        log.info("新增員工, 員工信息: {}", employee.toString());
+
+        // 設置初始密碼123456, 但是需要進行 md5 加密處理
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+
+        // 獲得當前用戶的 id
+        Long empId = (Long) request.getSession().getAttribute("employee");
+
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
+        employeeService.save(employee);
+
+        return R.success("新增員工成功");
     }
 
 }
