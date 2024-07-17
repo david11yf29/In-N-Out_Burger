@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
-* Response 最終都會封裝成此對象
+* Response 最終都會封裝成此對象, 設定為 <T> 保持通用性
 */
 
 @Data
