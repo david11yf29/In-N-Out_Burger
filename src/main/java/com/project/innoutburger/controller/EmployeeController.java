@@ -1,17 +1,16 @@
 package com.project.innoutburger.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.project.innoutburger.common.R;
 import com.project.innoutburger.entity.Employee;
 import com.project.innoutburger.service.EmployeeService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -98,6 +97,33 @@ public class EmployeeController {
         employeeService.save(employee);
 
         return R.success("新增員工成功");
+    }
+
+    /*
+    * 員工信息分頁查詢
+    * @param page
+    * @param pageSize
+    * @param name
+    * @return
+    * */
+    @GetMapping("/page")
+    public R<Page> page(int page, int pageSize, String name) {
+        log.info("page = {}, pageSize = {}, name = {}", page, pageSize, name);
+
+        // 構造分頁構造器 page, pageSize
+        Page pageInfo = new Page(page, pageSize);
+
+        // 構造條件構造器 name (相當於 SQL WHERE)
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper();
+        // 添加過濾條件
+        queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
+        // 添加排序條件
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+
+        // 執行查詢
+        employeeService.page(pageInfo, queryWrapper);
+
+        return R.success(pageInfo);
     }
 
 }
