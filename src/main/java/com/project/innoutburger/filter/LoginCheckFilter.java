@@ -1,6 +1,7 @@
 package com.project.innoutburger.filter;
 
 import com.alibaba.fastjson2.JSON;
+import com.project.innoutburger.common.BaseContext;
 import com.project.innoutburger.common.R;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -52,6 +53,13 @@ public class LoginCheckFilter implements Filter {
         // 4. 判斷登錄狀態, 如果已經登錄則直接放行
         if(request.getSession().getAttribute("employee") != null){
             log.info("用戶已登錄, 用戶id為: {}", request.getSession().getAttribute("employee"));
+
+            Long empId = (Long) request.getSession().getAttribute("employee");
+            BaseContext.setCurrentId(empId);
+
+            long id = Thread.currentThread().threadId();
+            log.info("線程 id 為: {}", id);
+
             filterChain.doFilter(request, response);
             return;
         }

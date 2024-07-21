@@ -135,6 +135,9 @@ public class EmployeeController {
     public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info(employee.toString());
 
+        long id = Thread.currentThread().threadId();
+        log.info("線程 id 為: {}", id);
+
         // 被 MetaObjectHandler 自動填充取代
         // Long empId = (Long)request.getSession().getAttribute("employee");
         // employee.setUpdateTime(LocalDateTime.now());
