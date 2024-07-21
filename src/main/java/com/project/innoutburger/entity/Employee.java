@@ -18,7 +18,11 @@ public class Employee implements Serializable {
     private String sex;
     private String idNumber; //身分證號碼
     private Integer status;
+
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @TableField(fill = FieldFill.INSERT)
@@ -26,4 +30,6 @@ public class Employee implements Serializable {
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
+
+
 }

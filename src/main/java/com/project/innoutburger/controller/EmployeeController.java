@@ -22,7 +22,6 @@ public class EmployeeController {
     @Autowired //由 Bean 來提供對象後面就不用自己 new 一個對象(IOC)
     private EmployeeService employeeService;
 
-
     /*
     * 員工登錄
     * @param request
@@ -85,14 +84,15 @@ public class EmployeeController {
         // 設置初始密碼123456, 但是需要進行 md5 加密處理
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
 
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+        // 被 MetaObjectHandler 自動填充取代
+        // employee.setCreateTime(LocalDateTime.now());
+        // employee.setUpdateTime(LocalDateTime.now());
 
         // 獲得當前用戶的 id
-        Long empId = (Long) request.getSession().getAttribute("employee");
+        // Long empId = (Long) request.getSession().getAttribute("employee");
 
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        // employee.setCreateUser(empId);
+        // employee.setUpdateUser(empId);
 
         employeeService.save(employee);
 
@@ -135,9 +135,10 @@ public class EmployeeController {
     public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info(employee.toString());
 
-        Long empId = (Long)request.getSession().getAttribute("employee");
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(empId);
+        // 被 MetaObjectHandler 自動填充取代
+        // Long empId = (Long)request.getSession().getAttribute("employee");
+        // employee.setUpdateTime(LocalDateTime.now());
+        // employee.setUpdateUser(empId);
         employeeService.updateById(employee);
 
         return R.success("員工信息修改成功");
