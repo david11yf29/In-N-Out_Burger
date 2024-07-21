@@ -45,5 +45,5 @@ public class Category implements Serializable {
     private Long updateUser;
 
     //是否删除
-    private Integer isDeleted;
+    // private Integer isDeleted;
 }
