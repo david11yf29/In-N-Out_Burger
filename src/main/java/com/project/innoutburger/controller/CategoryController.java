@@ -49,7 +49,21 @@ public class CategoryController {
 
         // 進行分頁查詢
         categoryService.page(pageInfo, queryWrapper);
-
         return R.success(pageInfo);
+    }
+
+    /*
+     * 根據 id 刪除分類
+     * @param id
+     * @return
+     * */
+    @DeleteMapping
+    public R<String> delete(Long id){
+        log.info("刪除分類: {}", id);
+
+        // categoryService.removeById(id);
+        categoryService.remove(id);
+
+        return R.success("分類信息刪除成功");
     }
 }
