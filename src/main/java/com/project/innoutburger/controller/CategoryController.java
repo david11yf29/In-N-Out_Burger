@@ -66,4 +66,17 @@ public class CategoryController {
 
         return R.success("分類信息刪除成功");
     }
+
+    /*
+     * 根據 id 修改分類信息
+     * @param category
+     * @return
+     * */
+    @PutMapping
+    public R<String> update(@RequestBody Category category) {
+        log.info("修改分類信息: {}", category);
+
+        categoryService.updateById(category);
+        return R.success("修改分類信息成功");
+    }
 }
