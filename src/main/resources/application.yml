@@ -22,3 +22,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+
+innoutburger:
+  path: /Users/david11yf29/Desktop/JavaTraining/project/In-N-Out_Burger/imgs/
