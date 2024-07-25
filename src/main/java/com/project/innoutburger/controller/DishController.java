@@ -123,7 +123,7 @@ public class DishController {
 
         dishService.updateWithFlavor(dishDto);
 
-        return R.success("修改菜品成功");
+        return R.success("修改菜品成功!");
     }
 
     /*
