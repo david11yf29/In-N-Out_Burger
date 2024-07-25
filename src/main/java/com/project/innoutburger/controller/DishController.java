@@ -146,5 +146,5 @@ public class DishController {
         List<Dish> list = dishService.list(queryWrapper);
 
         return R.success(list);
-    };
+    }
 }
