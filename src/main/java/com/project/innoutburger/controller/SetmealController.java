@@ -104,7 +104,7 @@ public class SetmealController {
 
         setmealService.removeWithDish(ids);
 
-        return R.success("套餐數據刪除成功");
+        return R.success("套餐數據刪除成功!");
     }
 
 }
